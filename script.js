@@ -1,9 +1,9 @@
 // Inquiry forms: check every field, show each problem next to its field, send without leaving the page.
 (function () {
   var messages = {
-    name: 'Please add your name.',
-    email: 'Please add your email so I can reply.',
-    emailBad: 'That email address doesn\'t look right. Check for a typo.',
+    name: 'Please enter your name.',
+    email: 'Please enter your email address so I can reply.',
+    emailBad: 'Enter a valid email address, for example name@company.com.',
     message: 'Please describe how I can help.'
   };
 
@@ -45,7 +45,7 @@
         if (!check(field)) bad.push(field);
       });
       if (bad.length) {
-        say(bad.length === 1 ? 'One thing to fix before this can send.' : bad.length + ' things to fix before this can send.');
+        say(bad.length === 1 ? 'Please correct the highlighted field.' : 'Please correct the ' + bad.length + ' highlighted fields.');
         bad[0].focus();
         return;
       }
@@ -67,7 +67,7 @@
               sent.hidden = false;
               sent.querySelector('.sent-h').focus();
             } else {
-              say('Thanks. Your inquiry is on its way and I\'ll reply by email.', true);
+              say('Thank you. Your inquiry has been received.', true);
             }
             return;
           }
@@ -86,12 +86,12 @@
               }
             });
             say(placed
-              ? 'Something needs fixing before this can send. See the note above.'
-              : 'Your inquiry didn\'t send, but your message is still here. Please try again in a minute.', false, !placed);
+              ? 'Please correct the highlighted field.'
+              : 'Your inquiry could not be sent. Your message has been kept. Please try again shortly.', false, !placed);
           });
         })
         .catch(function () {
-          say('Your inquiry didn\'t send, but your message is still here. Please try again in a minute.', false, true);
+          say('Your inquiry could not be sent. Your message has been kept. Please try again shortly.', false, true);
         })
         .then(function () {
           button.disabled = false;
@@ -114,7 +114,7 @@
     function recount() {
       if (!status.textContent || status.classList.contains('ok') || !form.dataset.tried) return;
       var left = form.querySelectorAll('[required][aria-invalid="true"]').length;
-      say(left === 0 ? '' : left === 1 ? 'One thing to fix before this can send.' : left + ' things to fix before this can send.');
+      say(left === 0 ? '' : left === 1 ? 'Please correct the highlighted field.' : 'Please correct the ' + left + ' highlighted fields.');
     }
 
     // Once a field has been flagged, re-check it as the visitor fixes it.
@@ -200,6 +200,7 @@
       row.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       toggle.textContent = open ? 'Close' : 'Menu';
+      document.body.classList.toggle('menu-open', open);
     }
     toggle.addEventListener('click', function () { setOpen(!row.classList.contains('open')); });
     nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
