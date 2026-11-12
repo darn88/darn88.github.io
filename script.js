@@ -7,7 +7,7 @@
     message: 'Please say a little about what you need help with.'
   };
 
-  document.querySelectorAll('.enquiry').forEach(function (form) {
+  document.querySelectorAll('.inquiry').forEach(function (form) {
     var status = form.querySelector('.form-status');
     var button = form.querySelector('.send');
 
@@ -20,7 +20,7 @@
       var value = field.value.trim();
       var text = '';
       if (!value) text = messages[field.name] || 'Please fill this in.';
-      else if (field.type === 'email' && !field.checkValidity()) text = messages.emailBad;
+      else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) text = messages.emailBad;
       var slot = document.getElementById(field.id + '-err');
       if (slot) slot.textContent = text;
       field.setAttribute('aria-invalid', text ? 'true' : 'false');
@@ -109,9 +109,9 @@
 // Phone shortcut: show the "Send an inquiry" tab once the opening section is out of view,
 // and hide it again at the inquiry form so it never covers it.
 (function () {
-  var tab = document.querySelector('.enquiry-tab');
+  var tab = document.querySelector('.inquiry-tab');
   var top = document.getElementById('top');
-  var end = document.getElementById('enquire');
+  var end = document.getElementById('inquire');
   if (!tab || !top || !end || !('IntersectionObserver' in window)) return;
 
   var topVisible = true;
@@ -140,4 +140,20 @@
     if (event.target === dialog) dialog.close();
   });
   dialog.addEventListener('close', function () { opener.focus(); });
+})();
+
+// Any "Send an inquiry" link: after the page scrolls to the form, put the cursor in the first field.
+(function () {
+  var first = document.getElementById('a-name');
+  var dialog = document.getElementById('resume');
+  if (!first) return;
+  document.querySelectorAll('a[href="#inquire"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      if (dialog && dialog.open) dialog.close();
+      setTimeout(function () {
+        var form = first.form;
+        if (form && !form.hidden) first.focus({ preventScroll: true });
+      }, 450);
+    });
+  });
 })();
