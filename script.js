@@ -121,3 +121,23 @@
   new IntersectionObserver(function (e) { topVisible = e[0].isIntersecting; update(); }).observe(top);
   new IntersectionObserver(function (e) { endVisible = e[0].isIntersecting; update(); }).observe(end);
 })();
+
+// Resume pop-up: the link opens the PDF if this script never runs.
+(function () {
+  var dialog = document.getElementById('resume');
+  var opener = document.querySelector('.cv-open');
+  if (!dialog || !opener || typeof dialog.showModal !== 'function') return;
+
+  opener.addEventListener('click', function (event) {
+    event.preventDefault();
+    dialog.showModal();
+    dialog.querySelector('.cv-body').scrollTop = 0;
+    dialog.querySelector('.cv-close').focus();
+  });
+  dialog.querySelector('.cv-close').addEventListener('click', function () { dialog.close(); });
+  // A click on the dimmed area outside the panel closes it too.
+  dialog.addEventListener('click', function (event) {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', function () { opener.focus(); });
+})();
