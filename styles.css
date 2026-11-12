@@ -97,12 +97,15 @@ a:hover { color: var(--blue-deep); }
 h1 {
   font-family: var(--serif);
   font-weight: 600;
-  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-size: clamp(2.5rem, 4.3vw, 3.75rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
 h1 span { color: var(--blue); }
+h1 .h1-line { display: block; }
+h1 .h1-first { color: inherit; }
+@media (min-width: 900px) { h1 .h1-first { white-space: nowrap; } }
 .lede { margin-top: var(--space-3); max-width: 36rem; font-size: 1.25rem; color: var(--ink-soft); }
 .lede + .lede { margin-top: var(--space-2); }
 .hero-cta { margin-top: var(--space-4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
@@ -188,10 +191,10 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 /* Services */
 
 .services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
-.services .sub { margin-top: 0.3rem; color: var(--blue); font-size: 1.0625rem; font-weight: 600; }
+.services .sub { margin-top: 0.3rem; color: var(--ink-soft); font-size: 1.0625rem; font-weight: 400; }
 .services ul { margin-top: var(--space-2); display: grid; gap: 0.45rem; }
 .services li { position: relative; padding-left: 1.1rem; }
-.services li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--blue); }
+.services li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--ink-soft); }
 .also { margin-top: var(--space-2); font-size: 1rem; color: var(--ink-soft); }
 .proof { margin-top: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--line); font-size: 1rem; color: var(--ink-soft); }
 .proof strong { color: var(--blue); font-weight: 800; }
@@ -368,7 +371,7 @@ body.menu-open .inquiry-tab { visibility: hidden; opacity: 0; }
   .nav a:last-child { border-bottom: 0; }
   .founders-note { padding: var(--space-3); }
   .founders-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
-  .hero { gap: var(--space-3); padding-top: 0; }
+  .hero { gap: var(--space-3); padding-top: var(--space-3); }
   .hero-copy { display: contents; }
   .hero h1 { order: 1; font-size: clamp(1.9rem, 8.4vw, 2.3rem); }
   .hero-photo { order: 2; max-width: none; }
@@ -381,7 +384,7 @@ body.menu-open .inquiry-tab { visibility: hidden; opacity: 0; }
   .services { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
   .pair { grid-template-columns: minmax(0, 1fr); }
   .card, .career { padding: var(--space-3); }
-  .proof-tag { right: 0.6rem; bottom: 0.6rem; max-width: 12.5rem; padding: 0.65rem 0.85rem; font-size: 0.8125rem; }
+  .proof-tag { right: 0.6rem; bottom: 0.6rem; max-width: 13.5rem; padding: 0.65rem 0.85rem; font-size: 0.875rem; }
   .proof-tag strong { font-size: 1.375rem; }
   .band-list { flex-direction: column; gap: 0.5rem; }
   .nudge { align-items: flex-start; gap: var(--space-2); }
