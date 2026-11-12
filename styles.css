@@ -149,6 +149,8 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 /* Results */
 
 .results { border-top: 1px solid var(--line); }
+.client-h { font-size: 1rem; font-weight: 600; color: var(--blue); letter-spacing: 0.02em; margin: 0 0 var(--space-1); }
+.results + .client-h { margin-top: var(--space-4); }
 .results li {
   display: grid;
   grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr);
@@ -189,7 +191,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 
 /* About */
 
-.about { border-top: 1px solid var(--line); }
+.about { padding-top: var(--space-5); }
 .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-5); align-items: start; }
 .notes { display: grid; gap: var(--space-3); }
 .notes p { margin-top: 0.3rem; color: var(--ink-soft); }
@@ -235,6 +237,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 .field [aria-invalid="true"] { border-color: var(--error); border-width: 2px; background: var(--error-wash); }
 .field-error { font-size: 0.9375rem; font-weight: 600; color: var(--error); line-height: 1.35; }
 .field-error:empty { display: none; }
+.hint { font-size: 0.9375rem; color: var(--ink-soft); margin-top: -0.15rem; }
 .trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .send-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-3); margin-top: var(--space-1); }
 .form-status { font-size: 1rem; font-weight: 600; color: var(--error); }
@@ -280,7 +283,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 .cv-close:hover { background: var(--line); }
 .btn-ghost { font-weight: 600; font-size: 0.9375rem; color: var(--blue); border: 1.5px solid var(--blue); border-radius: 999px; padding: 0.5rem 1.05rem; text-decoration: none; }
 .btn-ghost:hover { background: var(--band); color: var(--blue-deep); }
-.cv-sec p, .cv-sec li, .cv-cta p { max-width: 68ch; }
+.cv-sec p, .cv-sec li, .cv-cta p { max-width: 36rem; }
 .cv-cta { margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
 .cv-cta p { font-family: var(--serif); font-weight: 600; font-size: 1.375rem; line-height: 1.2; color: var(--ink); }
 .cv-body { overflow-y: auto; padding: var(--space-4); }

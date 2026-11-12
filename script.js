@@ -11,8 +11,18 @@
     var status = form.querySelector('.form-status');
     var button = form.querySelector('.send');
 
-    function say(text, ok) {
+    function say(text, ok, withLinkedIn) {
       status.textContent = text;
+      if (withLinkedIn) {
+        var a = document.createElement('a');
+        a.href = 'https://www.linkedin.com/in/ArnoldDamico';
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = 'LinkedIn';
+        status.appendChild(document.createTextNode(' You can also reach me on '));
+        status.appendChild(a);
+        status.appendChild(document.createTextNode('.'));
+      }
       status.classList.toggle('ok', !!ok);
     }
 
@@ -20,7 +30,7 @@
       var value = field.value.trim();
       var text = '';
       if (!value) text = messages[field.name] || 'Please fill this in.';
-      else if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) text = messages.emailBad;
+      else if (field.type === 'email' && !/^[^\s@]+@(?!.*\.\.)[^\s@.][^\s@]*\.[^\s@.]{2,}$/.test(value)) text = messages.emailBad;
       var slot = document.getElementById(field.id + '-err');
       if (slot) slot.textContent = text;
       field.setAttribute('aria-invalid', text ? 'true' : 'false');
@@ -76,19 +86,21 @@
             });
             say(placed
               ? 'Something needs fixing before this can send. See the note above.'
-              : 'Your inquiry didn\'t send, but your message is still here. Please try again in a minute.');
+              : 'Your inquiry didn\'t send, but your message is still here. Please try again in a minute.', false, !placed);
           });
         })
         .catch(function () {
-          say('Your inquiry didn\'t send, but your message is still here. Please try again in a minute.');
+          say('Your inquiry didn\'t send, but your message is still here. Please try again in a minute.', false, true);
         })
         .then(function () {
           button.disabled = false;
-          button.textContent = 'Send inquiry';
+          button.textContent = 'Send an inquiry';
+          // Sending disabled the button and dropped keyboard focus. Put it back if the form is still showing.
+          if (!form.hidden && document.activeElement === document.body) button.focus();
         });
     });
 
-    // "Send another note" brings the form back.
+    // "Send another inquiry" brings the form back.
     var sentPanel = form.parentNode.querySelector('.sent');
     var again = sentPanel && sentPanel.querySelector('.send-another');
     if (again) again.addEventListener('click', function () {
