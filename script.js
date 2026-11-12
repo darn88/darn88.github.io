@@ -122,7 +122,7 @@
 // and hide it again at the inquiry form so it never covers it.
 (function () {
   var tab = document.querySelector('.inquiry-tab');
-  var top = document.getElementById('top');
+  var top = document.querySelector('.hero-cta');
   var end = document.getElementById('inquire');
   if (!tab || !top || !end || !('IntersectionObserver' in window)) return;
 
