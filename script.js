@@ -1,21 +1,3 @@
-// Red-pen marks draw on as they scroll into view. They stay visible if this script never runs.
-(function () {
-  var marks = document.querySelectorAll('.pen');
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (still || !('IntersectionObserver' in window)) return;
-
-  marks.forEach(function (m) { m.classList.add('pending'); });
-  var seen = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      e.target.classList.remove('pending');
-      e.target.classList.add('drawn');
-      seen.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -12% 0px' });
-  marks.forEach(function (m) { seen.observe(m); });
-})();
-
 // Enquiry forms: check every field, show each problem next to its field, send without leaving the page.
 (function () {
   var messages = {
@@ -104,12 +86,12 @@
   });
 })();
 
-// Phone shortcut: show the "Send an enquiry" tab once the opening form is out of view,
-// and hide it again near the closing form so it never covers it.
+// Phone shortcut: show the "Send an enquiry" tab once the opening section is out of view,
+// and hide it again at the enquiry form so it never covers it.
 (function () {
   var tab = document.querySelector('.enquiry-tab');
-  var top = document.getElementById('enquire');
-  var end = document.getElementById('enquire-end');
+  var top = document.getElementById('top');
+  var end = document.getElementById('enquire');
   if (!tab || !top || !end || !('IntersectionObserver' in window)) return;
 
   var topVisible = true;
