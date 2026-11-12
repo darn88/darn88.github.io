@@ -78,6 +78,11 @@ a:hover { color: var(--blue-deep); }
 
 .founders-note { margin-top: var(--space-5); padding: var(--space-3) var(--space-4); background: var(--band); border-radius: 1.25rem; }
 .founders-note p { margin-top: 0.4rem; color: var(--ink-soft); max-width: 40rem; }
+.founders-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-2); }
+.founders-grid h4 { margin: 0; font-size: 1.125rem; font-weight: 800; color: var(--ink); }
+.founders-note .proof { border-top-color: rgba(31, 86, 179, 0.18); }
+.fig-none .kind { margin-bottom: 0; }
+.career-sub strong { color: var(--ink); }
 
 /* Hero */
 
@@ -362,6 +367,7 @@ body.menu-open .inquiry-tab { visibility: hidden; opacity: 0; }
   .nav a { padding: 0.7rem 0; font-size: 1.0625rem; border-bottom: 1px solid var(--line); }
   .nav a:last-child { border-bottom: 0; }
   .founders-note { padding: var(--space-3); }
+  .founders-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
   .hero { gap: var(--space-3); padding-top: 0; }
   .hero-copy { display: contents; }
   .hero h1 { order: 1; font-size: clamp(1.9rem, 8.4vw, 2.3rem); }
