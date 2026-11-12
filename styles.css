@@ -351,7 +351,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
   .nav a:not(.nav-cta) { display: none; }
   .hero { gap: var(--space-3); padding-top: 0; }
   .hero-copy { display: contents; }
-  .hero h1 { order: 1; }
+  .hero h1 { order: 1; font-size: clamp(1.9rem, 8.4vw, 2.3rem); }
   .hero-photo { order: 2; max-width: none; }
   .hero-photo img { aspect-ratio: 4 / 3; object-position: center 18%; }
   .hero .lede { order: 3; margin-top: 0; }
@@ -362,7 +362,8 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
   .services { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
   .pair { grid-template-columns: minmax(0, 1fr); }
   .card, .career { padding: var(--space-3); }
-  .proof-tag { right: 0.75rem; bottom: 0.75rem; }
+  .proof-tag { right: 0.6rem; bottom: 0.6rem; max-width: 12.5rem; padding: 0.65rem 0.85rem; font-size: 0.8125rem; }
+  .proof-tag strong { font-size: 1.375rem; }
   .band-list { flex-direction: column; gap: 0.5rem; }
   .nudge { align-items: flex-start; gap: var(--space-2); }
   .nudge img { width: 3rem; height: 3rem; }
