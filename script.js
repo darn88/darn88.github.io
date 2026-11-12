@@ -4,7 +4,7 @@
     name: 'Please add your name.',
     email: 'Please add your email so I can reply.',
     emailBad: 'That email address doesn\'t look right. Check for a typo.',
-    message: 'Please say a little about what you need help with.'
+    message: 'Please describe how I can help.'
   };
 
   document.querySelectorAll('.inquiry').forEach(function (form) {
@@ -62,7 +62,7 @@
             say('');
             var sent = form.parentNode.querySelector('.sent');
             if (sent) {
-              sent.querySelector('.sent-h').textContent = first ? 'Thanks, ' + first + '.' : 'Thanks.';
+              sent.querySelector('.sent-h').textContent = first ? 'Thank you, ' + first + '.' : 'Thank you.';
               form.hidden = true;
               sent.hidden = false;
               sent.querySelector('.sent-h').focus();
@@ -188,4 +188,45 @@
       }, 450);
     });
   });
+})();
+
+// Header: phone menu toggle, and highlight the section currently in view.
+(function () {
+  var row = document.querySelector('.nav-row');
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('site-nav');
+  if (toggle && row && nav) {
+    function setOpen(open) {
+      row.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Close' : 'Menu';
+    }
+    toggle.addEventListener('click', function () { setOpen(!row.classList.contains('open')); });
+    nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && row.classList.contains('open')) { setOpen(false); toggle.focus(); }
+    });
+  }
+
+  if (!nav) return;
+  var links = {};
+  nav.querySelectorAll('a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  var sections = Object.keys(links).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  // The current section is the last one whose top has passed 40% of the screen height.
+  function mark() {
+    var line = window.innerHeight * 0.4, current = null;
+    sections.forEach(function (el) { if (el.getBoundingClientRect().top <= line) current = el.id; });
+    if (current && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = sections[sections.length - 1].id;
+    Object.keys(links).forEach(function (id) {
+      if (id === current) links[id].setAttribute('aria-current', 'true');
+      else links[id].removeAttribute('aria-current');
+    });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; mark(); });
+  }, { passive: true });
+  mark();
 })();
