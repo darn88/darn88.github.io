@@ -39,6 +39,7 @@
 
     form.addEventListener('submit', function (event) {
       event.preventDefault();
+      form.dataset.tried = '1';
       var bad = [];
       form.querySelectorAll('[required]').forEach(function (field) {
         if (!check(field)) bad.push(field);
@@ -109,10 +110,29 @@
       form.querySelector('input:not([type=hidden]):not(.trap)').focus();
     });
 
+    // Keep the "N things to fix" line honest as fields get fixed.
+    function recount() {
+      if (!status.textContent || status.classList.contains('ok') || !form.dataset.tried) return;
+      var left = form.querySelectorAll('[required][aria-invalid="true"]').length;
+      say(left === 0 ? '' : left === 1 ? 'One thing to fix before this can send.' : left + ' things to fix before this can send.');
+    }
+
     // Once a field has been flagged, re-check it as the visitor fixes it.
+    // For email, only clear the flag while typing; check the format again when they leave the field.
     form.querySelectorAll('[required]').forEach(function (field) {
       field.addEventListener('input', function () {
-        if (field.getAttribute('aria-invalid') === 'true') check(field);
+        if (field.getAttribute('aria-invalid') !== 'true') return;
+        if (field.type === 'email' && field.value.trim()) {
+          var slot = document.getElementById(field.id + '-err');
+          if (slot) slot.textContent = '';
+          field.setAttribute('aria-invalid', 'false');
+        } else {
+          check(field);
+        }
+        recount();
+      });
+      if (field.type === 'email') field.addEventListener('blur', function () {
+        if (form.dataset.tried && field.value.trim()) { check(field); recount(); }
       });
     });
   });
