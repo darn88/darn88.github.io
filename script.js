@@ -1,4 +1,4 @@
-// Enquiry forms: check every field, show each problem next to its field, send without leaving the page.
+// Inquiry forms: check every field, show each problem next to its field, send without leaving the page.
 (function () {
   var messages = {
     name: 'Please add your name.',
@@ -46,8 +46,18 @@
       fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
         .then(function (res) {
           if (res.ok) {
+            var first = (form.querySelector('[name="name"]').value.trim().split(/\s+/)[0] || '');
             form.reset();
-            say('Thanks. Your enquiry is on its way and I\'ll reply by email.', true);
+            say('');
+            var sent = form.parentNode.querySelector('.sent');
+            if (sent) {
+              sent.querySelector('.sent-h').textContent = first ? 'Thanks, ' + first + '.' : 'Thanks.';
+              form.hidden = true;
+              sent.hidden = false;
+              sent.querySelector('.sent-h').focus();
+            } else {
+              say('Thanks. Your inquiry is on its way and I\'ll reply by email.', true);
+            }
             return;
           }
           // Formspree rejected something. Show its message next to the field it names, if it names one.
@@ -57,7 +67,8 @@
               var field = err.field && form.querySelector('[name="' + err.field + '"]');
               var slot = field && document.getElementById(field.id + '-err');
               if (slot) {
-                slot.textContent = err.message || 'Please check this field.';
+                // Say it in the site's voice, not the form service's.
+                slot.textContent = messages[field.name === 'email' ? 'emailBad' : field.name] || 'Please check this field.';
                 field.setAttribute('aria-invalid', 'true');
                 if (!placed) field.focus();
                 placed++;
@@ -65,16 +76,25 @@
             });
             say(placed
               ? 'Something needs fixing before this can send. See the note above.'
-              : 'Your enquiry didn\'t send, but your message is still here. Please try again in a minute.');
+              : 'Your inquiry didn\'t send, but your message is still here. Please try again in a minute.');
           });
         })
         .catch(function () {
-          say('Your enquiry didn\'t send, but your message is still here. Please try again in a minute.');
+          say('Your inquiry didn\'t send, but your message is still here. Please try again in a minute.');
         })
         .then(function () {
           button.disabled = false;
-          button.textContent = 'Send enquiry';
+          button.textContent = 'Send inquiry';
         });
+    });
+
+    // "Send another note" brings the form back.
+    var sentPanel = form.parentNode.querySelector('.sent');
+    var again = sentPanel && sentPanel.querySelector('.send-another');
+    if (again) again.addEventListener('click', function () {
+      sentPanel.hidden = true;
+      form.hidden = false;
+      form.querySelector('input:not([type=hidden]):not(.trap)').focus();
     });
 
     // Once a field has been flagged, re-check it as the visitor fixes it.
@@ -86,8 +106,8 @@
   });
 })();
 
-// Phone shortcut: show the "Send an enquiry" tab once the opening section is out of view,
-// and hide it again at the enquiry form so it never covers it.
+// Phone shortcut: show the "Send an inquiry" tab once the opening section is out of view,
+// and hide it again at the inquiry form so it never covers it.
 (function () {
   var tab = document.querySelector('.enquiry-tab');
   var top = document.getElementById('top');

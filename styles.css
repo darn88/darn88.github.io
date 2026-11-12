@@ -133,19 +133,18 @@ h1 span { color: var(--blue); }
 
 /* Proof band */
 
-.band { background: var(--band); padding-left: var(--pad); padding-right: var(--pad); }
-.band > .wrap, .section-tint > .wrap, .enquire > .wrap { padding-left: 0; padding-right: 0; }
+.band { background: var(--band); }
 .band-list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); padding-top: 1.75rem; padding-bottom: 1.75rem; font-size: 1rem; color: var(--ink-soft); }
 .band-list strong { font-size: 1.375rem; color: var(--ink); margin-right: 0.4rem; font-weight: 800; }
 
 /* Sections */
 
 .section { padding-top: var(--space-6); padding-bottom: var(--space-6); }
-.section-tint { background: var(--band); padding-left: var(--pad); padding-right: var(--pad); }
+.section-tint { background: var(--band); }
 .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-1) var(--space-4); margin-bottom: var(--space-4); }
 h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(2rem, 3.4vw, 2.75rem); line-height: 1.1; letter-spacing: -0.015em; }
 .section-head p { color: var(--ink-soft); font-size: 1.0625rem; max-width: 34rem; }
-h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; }
+h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.01em; text-wrap: balance; }
 
 /* Results */
 
@@ -195,7 +194,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 
 /* Enquiry */
 
-.enquire { background: var(--navy); color: #fff; padding-left: var(--pad); padding-right: var(--pad); }
+.enquire { background: var(--navy); color: #fff; }
 .enquire-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: var(--space-5); align-items: start; padding-top: var(--space-6); padding-bottom: var(--space-6); }
 .enquire h2 { color: #fff; }
 .enquire-copy p { margin-top: var(--space-2); color: var(--on-navy); max-width: 28rem; }
@@ -204,6 +203,7 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 
 .card { background: var(--surface); color: var(--ink); border-radius: 1.25rem; padding: var(--space-4); box-shadow: 0 2px 4px rgba(7, 21, 38, 0.25), 0 30px 60px -30px rgba(7, 21, 38, 0.7); }
 .enquiry { display: grid; gap: var(--space-2); }
+.enquiry[hidden] { display: none; }
 .pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); align-items: start; }
 .field { display: grid; gap: 0.35rem; }
 .field label { font-size: 0.9375rem; font-weight: 600; color: var(--ink); }
@@ -231,6 +231,17 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 .form-status { font-size: 1rem; font-weight: 600; color: var(--error); }
 .form-status:empty { display: none; }
 .form-status.ok { color: var(--ok); }
+
+/* Sent confirmation */
+
+.sent { display: grid; gap: var(--space-2); align-content: start; }
+.sent[hidden] { display: none; }
+.sent-h { font-family: var(--serif); font-weight: 600; font-size: 2rem; line-height: 1.1; color: var(--ink); }
+.sent-h:focus { outline: none; }
+.sent p { color: var(--ink-soft); }
+.sent .assure { color: var(--ink); }
+.link-btn { justify-self: start; font: inherit; font-weight: 600; color: var(--blue); background: none; border: 0; padding: 0.25rem 0; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
+.link-btn:hover { color: var(--blue-deep); }
 
 /* Footer */
 
@@ -265,7 +276,15 @@ h3 { font-weight: 800; font-size: 1.375rem; line-height: 1.25; letter-spacing: -
 
 @media (max-width: 40rem) {
   body { font-size: 1.0625rem; }
-  .nav { gap: 0.25rem var(--space-3); font-size: 0.9375rem; }
+  .nav-row { flex-wrap: nowrap; padding-top: 1.1rem; padding-bottom: 1.1rem; }
+  .nav a:not(.nav-cta) { display: none; }
+  .hero { gap: var(--space-3); padding-top: 0; }
+  .hero-copy { display: contents; }
+  .hero h1 { order: 1; }
+  .hero-photo { order: 2; max-width: none; }
+  .hero-photo img { aspect-ratio: 1 / 1; object-position: center 15%; }
+  .hero .lede { order: 3; margin-top: 0; }
+  .hero-cta { order: 4; margin-top: 0; }
   .section { padding-top: var(--space-5); padding-bottom: var(--space-5); }
   .results li { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
   .services { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
